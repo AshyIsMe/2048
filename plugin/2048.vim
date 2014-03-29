@@ -7,7 +7,7 @@
 "  8,  9, 10, 11
 " 12, 13, 14, 15 ]
 
-function! NewGame()
+function! NewGame2048()
   let board = [0,0,0,0,  0,0,0,0,  0,0,0,0,  0,0,0,0]
   let board = AddRandTile(l:board)
   let board = AddRandTile(l:board)
