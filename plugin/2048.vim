@@ -23,7 +23,7 @@ function! NewGame2048()
   return l:board
 endfunction
 
-exe ":command NewGame2048 call NewGame2048()"
+exe ":command! NewGame2048 call NewGame2048()"
 
 function! Up2048()
   call append(line('$'), 'UP')
@@ -33,7 +33,7 @@ function! Up2048()
   if l:last == 0
     return 0
   endif
-  let boardstring = getline(l:last)[11:]
+  let boardstring = getline(l:last)[12:]
   if l:boardstring == "['GameOver']"
     let failed = append(line('$'), "GAME OVER")
     return 0
@@ -67,6 +67,7 @@ function! Up2048()
   "Check if we've won
   if IsGameWon(l:newBoard)
     let failed = append(line('$'), "!!! YOU WIN !!!")
+    let failed = append(line('$'), "Press n to start a new game")
     let failed = append(line('$'), "2048 board: " . string(l:newBoard))
   else
     "now add a new tile if able
@@ -86,7 +87,7 @@ function! Down2048()
   if l:last == 0
     return 0
   endif
-  let boardstring = getline(l:last)[11:]
+  let boardstring = getline(l:last)[12:]
   if l:boardstring == "['GameOver']"
     let failed = append(line('$'), "GAME OVER")
     return 0
@@ -120,6 +121,7 @@ function! Down2048()
   "Check if we've won
   if IsGameWon(l:newBoard)
     let failed = append(line('$'), "!!! YOU WIN !!!")
+    let failed = append(line('$'), "Press n to start a new game")
     let failed = append(line('$'), "2048 board: " . string(l:newBoard))
   else
     "now add a new tile if able
@@ -139,7 +141,7 @@ function! Left2048()
   if l:last == 0
     return 0
   endif
-  let boardstring = getline(l:last)[11:]
+  let boardstring = getline(l:last)[12:]
   if l:boardstring == "['GameOver']"
     let failed = append(line('$'), "GAME OVER")
     return 0
@@ -165,6 +167,7 @@ function! Left2048()
   "Check if we've won
   if IsGameWon(l:newBoard)
     let failed = append(line('$'), "!!! YOU WIN !!!")
+    let failed = append(line('$'), "Press n to start a new game")
     let failed = append(line('$'), "2048 board: " . string(l:newBoard))
   else
     "now add a new tile if able
@@ -183,7 +186,7 @@ function! Right2048()
   if l:last == 0
     return 0
   endif
-  let boardstring = getline(l:last)[11:]
+  let boardstring = getline(l:last)[12:]
   if l:boardstring == "['GameOver']"
     let failed = append(line('$'), "GAME OVER")
     return 0
@@ -209,6 +212,7 @@ function! Right2048()
   "Check if we've won
   if IsGameWon(l:newBoard)
     let failed = append(line('$'), "!!! YOU WIN !!!")
+    let failed = append(line('$'), "Press n to start a new game")
     let failed = append(line('$'), "2048 board: " . string(l:newBoard))
   else
     "now add a new tile if able
@@ -226,7 +230,7 @@ function! PrettyPrint()
     echo "Not on a board"
     return 0
   endif
-  let boardstring = getline(l:last)[11:]
+  let boardstring = getline(l:last)[12:]
   if l:boardstring == "['GameOver']"
     "let failed = append(line('$'), "GAME OVER")
     return 0
