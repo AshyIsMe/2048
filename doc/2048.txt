@@ -1,0 +1,41 @@
+*2048.txt* Play a game of 2048 in Vim!
+
+
+      VIM REFERENCE MANUAL  by Aaron Ash
+
+
+Help on playing the 2048.vim game                                *2048*
+
+1. Introduction       |2048-intro|
+2. How to Play      |2048-howtoplay|
+3. Authors        |2048-authors|
+
+==============================================================================
+ 1. INTRODUCTION                                           *2048-intro*
+
+2048.vim is a clone of the 2048 web game:
+     http://gabrielecirulli.github.io/2048/
+==============================================================================
+ 2. HOW TO PLAY                                     *2048-howtoplay*
+
+Start a new game with:
+>
+  :NewGame2048()
+<
+
+A new tab will open and a new game of 2048 will be started.
+Use the cursor keys to play: Up, Down, Left, Right.
+
+The Aim of the game is to make a tile reach the 2048 before all of the board
+fills up.
+==============================================================================
+==============================================================================
+ 3. AUTHORS                                              *2048-authors*
+
+2048.vim is maintained by Aaron Ash
+
+Aaron Ash <aaron.ash@gmail.com>
+
+Feedback about enhancements or bugs welcome.
+
+ vim:tw=78:ts=8:ft=help:norl:
