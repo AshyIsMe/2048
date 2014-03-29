@@ -56,10 +56,15 @@ function! Up2048()
     let newBoard = extend(newBoard, [l:newCols[l:i]] + [l:newCols[l:i+4]] + [l:newCols[l:i+8]] + [l:newCols[l:i+12]])
   endfor
 
-  "now add a new tile if able
-  let newBoard = AddRandTile(l:newBoard)
-
-  let failed = append(line('$'), "2048 board: " . string(l:newBoard))
+  "Check if we've won
+  if IsGameWon(l:newBoard)
+    let failed = append(line('$'), "!!! YOU WIN !!!")
+    let failed = append(line('$'), "2048 board: " . string(l:newBoard))
+  else
+    "now add a new tile if able
+    let newBoard = AddRandTile(l:newBoard)
+    let failed = append(line('$'), "2048 board: " . string(l:newBoard))
+  endif
 
   return l:newBoard
 endfunction
@@ -100,10 +105,16 @@ function! Down2048()
     let newBoard = extend(newBoard, [l:newCols[l:i]] + [l:newCols[l:i+4]] + [l:newCols[l:i+8]] + [l:newCols[l:i+12]])
   endfor
 
-  "now add a new tile if able
-  let newBoard = AddRandTile(l:newBoard)
+  "Check if we've won
+  if IsGameWon(l:newBoard)
+    let failed = append(line('$'), "!!! YOU WIN !!!")
+    let failed = append(line('$'), "2048 board: " . string(l:newBoard))
+  else
+    "now add a new tile if able
+    let newBoard = AddRandTile(l:newBoard)
+    let failed = append(line('$'), "2048 board: " . string(l:newBoard))
+  endif
 
-  let failed = append(line('$'), "2048 board: " . string(l:newBoard))
 
   return l:newBoard
 endfunction
@@ -135,10 +146,15 @@ function! Left2048()
     let newBoard = extend(newBoard, l:row)
   endfor
 
-  "now add a new tile if able
-  let newBoard = AddRandTile(l:newBoard)
-
-  let failed = append(line('$'), "2048 board: " . string(l:newBoard))
+  "Check if we've won
+  if IsGameWon(l:newBoard)
+    let failed = append(line('$'), "!!! YOU WIN !!!")
+    let failed = append(line('$'), "2048 board: " . string(l:newBoard))
+  else
+    "now add a new tile if able
+    let newBoard = AddRandTile(l:newBoard)
+    let failed = append(line('$'), "2048 board: " . string(l:newBoard))
+  endif
 
   return l:newBoard
 endfunction
@@ -170,10 +186,15 @@ function! Right2048()
     let newBoard = extend(newBoard, l:row)
   endfor
 
-  "now add a new tile if able
-  let newBoard = AddRandTile(l:newBoard)
-
-  let failed = append(line('$'), "2048 board: " . string(l:newBoard))
+  "Check if we've won
+  if IsGameWon(l:newBoard)
+    let failed = append(line('$'), "!!! YOU WIN !!!")
+    let failed = append(line('$'), "2048 board: " . string(l:newBoard))
+  else
+    "now add a new tile if able
+    let newBoard = AddRandTile(l:newBoard)
+    let failed = append(line('$'), "2048 board: " . string(l:newBoard))
+  endif
 
   return l:newBoard
 endfunction
@@ -231,3 +252,10 @@ function! AddRandTile(board)
   return l:b
 endfunction
 
+function! IsGameWon(board)
+  let b = deepcopy(a:board)
+  let winningTiles = len(filter(copy(l:b), 'v:val == 2048'))
+
+  "0 means we haven't won yet. Anything greater and we've won!
+  return len(l:winningTiles)
+endfunction
