@@ -8,7 +8,7 @@ You should be able to do the usual thing with vundle:
 
 ## Usage
 Start a new game with:
-    :NewGame2048()
+    :NewGame2048
 
 This will open a new tab and start a new game.  
 The controls are simply the cursor keys Up, Down, Left, Right.

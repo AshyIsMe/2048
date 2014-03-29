@@ -23,6 +23,8 @@ function! NewGame2048()
   return l:board
 endfunction
 
+exe ":command NewGame2048 call NewGame2048()"
+
 function! Up2048()
   call append(line('$'), 'UP')
   call append(line('$'), '')
@@ -32,6 +34,10 @@ function! Up2048()
     return 0
   endif
   let boardstring = getline(l:last)[11:]
+  if l:boardstring == "['GameOver']"
+    let failed = append(line('$'), "GAME OVER")
+    return 0
+  endif
   let b = eval(boardstring)
   let newBoard = []
 
@@ -81,6 +87,10 @@ function! Down2048()
     return 0
   endif
   let boardstring = getline(l:last)[11:]
+  if l:boardstring == "['GameOver']"
+    let failed = append(line('$'), "GAME OVER")
+    return 0
+  endif
   let b = eval(boardstring)
   let newBoard = []
 
@@ -130,6 +140,10 @@ function! Left2048()
     return 0
   endif
   let boardstring = getline(l:last)[11:]
+  if l:boardstring == "['GameOver']"
+    let failed = append(line('$'), "GAME OVER")
+    return 0
+  endif
   let b = eval(boardstring)
   let newBoard = []
 
@@ -170,6 +184,10 @@ function! Right2048()
     return 0
   endif
   let boardstring = getline(l:last)[11:]
+  if l:boardstring == "['GameOver']"
+    let failed = append(line('$'), "GAME OVER")
+    return 0
+  endif
   let b = eval(boardstring)
   let newBoard = []
 
@@ -209,6 +227,10 @@ function! PrettyPrint()
     return 0
   endif
   let boardstring = getline(l:last)[11:]
+  if l:boardstring == "['GameOver']"
+    "let failed = append(line('$'), "GAME OVER")
+    return 0
+  endif
   let b = eval(boardstring)
 
   let rows = []

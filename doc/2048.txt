@@ -20,7 +20,7 @@ Help on playing the 2048.vim game                                *2048*
 
 Start a new game with:
 >
-  :NewGame2048()
+  :NewGame2048
 <
 
 A new tab will open and a new game of 2048 will be started.
