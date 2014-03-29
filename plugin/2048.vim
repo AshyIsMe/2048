@@ -18,6 +18,8 @@ function! NewGame2048()
   let failed = append(line('$'), "New game of 2048!")
   let failed = append(line('$'), "2048 board: " . string(l:board))
 
+  call PrettyPrint()
+
   return l:board
 endfunction
 
@@ -217,10 +219,33 @@ function! PrettyPrint()
   "print each now nicely
   let failed = append(line('$'), 'Pretty Print:')
   for row in l:rows
-    let failed = append(line('$'), string(l:row))
+    let line = '['
+    for item in l:row
+      let line = l:line . PadL(string(l:item), 4) . ','
+    endfor
+    let line = l:line[0:len(l:line)-2] . ' ]'
+    "let failed = append(line('$'), string(l:row))
+    let failed = append(line('$'), l:line)
   endfor
   let failed = append(line('$'), '')
   call cursor(line('$'),0)
+endfunction
+
+function! PadR(s,amt)
+   "  PadR('abc', 5) == 'abc  '
+   "  PadR('ab', 5) ==  'ab   '
+    return a:s . repeat(' ',a:amt - len(a:s))
+endfunction
+
+function! PadL(s,amt,...)
+  " PadL('832', 4)      == ' 823'
+  " PadL('832', 4, '0') == '0823'
+    if a:0 > 0
+        let char = a:1
+    else
+        let char = ' '
+    endif
+    return repeat(char,a:amt - len(a:s)) . a:s
 endfunction
 
 function! Rand()
