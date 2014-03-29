@@ -257,5 +257,5 @@ function! IsGameWon(board)
   let winningTiles = len(filter(copy(l:b), 'v:val == 2048'))
 
   "0 means we haven't won yet. Anything greater and we've won!
-  return len(l:winningTiles)
+  return l:winningTiles
 endfunction
