@@ -12,6 +12,9 @@ function! NewGame2048()
   let board = AddRandTile(l:board)
   let board = AddRandTile(l:board)
 
+  exe ":tabnew"
+  set filetype=2048
+
   let failed = append(line('$'), "New game of 2048!")
   let failed = append(line('$'), "2048 board: " . string(l:board))
 
