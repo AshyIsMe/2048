@@ -14,3 +14,6 @@ This will open a new tab and start a new game.
 
 The controls are the classic h, j, k, l and also the cursor keys Up, Down, Left, Right.
 
+## Screenshot
+
+![screenshot](http://i.imgur.com/XVh4IfA.png)
