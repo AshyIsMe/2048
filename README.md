@@ -11,5 +11,6 @@ Start a new game with:
     :NewGame2048
 
 This will open a new tab and start a new game.  
-The controls are simply the cursor keys Up, Down, Left, Right.
+
+The controls are the classic H, J, K, L and also the cursor keys Up, Down, Left, Right.
 
