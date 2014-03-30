@@ -242,7 +242,8 @@ function! PrettyPrint()
   for row in l:rows
     let line = '['
     for item in l:row
-      let line = l:line . PadL(string(l:item), 4) . ','
+      "let line = l:line . PadL(string(l:item), 4) . ','
+      let line = l:line . substitute(PadL(string(l:item), 4), ' 0', '  ', '') . ','
     endfor
     let line = l:line[0:len(l:line)-2] . ' ]'
     "let failed = append(line('$'), string(l:row))
