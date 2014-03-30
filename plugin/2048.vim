@@ -34,10 +34,6 @@ function! Up2048()
     return 0
   endif
   let boardstring = getline(l:last)[12:]
-  "if l:boardstring == "['GameOver']"
-    "let failed = append(line('$'), "GAME OVER")
-    "return 0
-  "endif
   if IsGameOver(l:boardstring)
     return 0
   endif
@@ -91,10 +87,6 @@ function! Down2048()
     return 0
   endif
   let boardstring = getline(l:last)[12:]
-  "if l:boardstring == "['GameOver']"
-    "let failed = append(line('$'), "GAME OVER")
-    "return 0
-  "endif
   if IsGameOver(l:boardstring)
     return 0
   endif
@@ -148,10 +140,6 @@ function! Left2048()
     return 0
   endif
   let boardstring = getline(l:last)[12:]
-  "if l:boardstring == "['GameOver']"
-    "let failed = append(line('$'), "GAME OVER")
-    "return 0
-  "endif
   if IsGameOver(l:boardstring)
     return 0
   endif
@@ -196,10 +184,6 @@ function! Right2048()
     return 0
   endif
   let boardstring = getline(l:last)[12:]
-  "if l:boardstring == "['GameOver']"
-    "let failed = append(line('$'), "GAME OVER")
-    "return 0
-  "endif
   if IsGameOver(l:boardstring)
     return 0
   endif
@@ -243,10 +227,6 @@ function! PrettyPrint()
     return 0
   endif
   let boardstring = getline(l:last)[12:]
-  "if l:boardstring == "['GameOver']"
-    ""let failed = append(line('$'), "GAME OVER")
-    "return 0
-  "endif
   if IsGameOver(l:boardstring)
     return 0
   endif
