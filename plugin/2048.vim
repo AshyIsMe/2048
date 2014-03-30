@@ -8,7 +8,7 @@
 " 12, 13, 14, 15 ]
 
 function! NewGame2048()
-  let board = [0,0,0,0,  0,0,0,0,  0,0,0,0,  0,0,0,0]
+  let board = repeat([0], 4 * 4)
   let board = AddRandTile(l:board)
   let board = AddRandTile(l:board)
 
@@ -34,8 +34,11 @@ function! Up2048()
     return 0
   endif
   let boardstring = getline(l:last)[12:]
-  if l:boardstring == "['GameOver']"
-    let failed = append(line('$'), "GAME OVER")
+  "if l:boardstring == "['GameOver']"
+    "let failed = append(line('$'), "GAME OVER")
+    "return 0
+  "endif
+  if IsGameOver(l:boardstring)
     return 0
   endif
   let b = eval(boardstring)
@@ -88,8 +91,11 @@ function! Down2048()
     return 0
   endif
   let boardstring = getline(l:last)[12:]
-  if l:boardstring == "['GameOver']"
-    let failed = append(line('$'), "GAME OVER")
+  "if l:boardstring == "['GameOver']"
+    "let failed = append(line('$'), "GAME OVER")
+    "return 0
+  "endif
+  if IsGameOver(l:boardstring)
     return 0
   endif
   let b = eval(boardstring)
@@ -142,8 +148,11 @@ function! Left2048()
     return 0
   endif
   let boardstring = getline(l:last)[12:]
-  if l:boardstring == "['GameOver']"
-    let failed = append(line('$'), "GAME OVER")
+  "if l:boardstring == "['GameOver']"
+    "let failed = append(line('$'), "GAME OVER")
+    "return 0
+  "endif
+  if IsGameOver(l:boardstring)
     return 0
   endif
   let b = eval(boardstring)
@@ -187,8 +196,11 @@ function! Right2048()
     return 0
   endif
   let boardstring = getline(l:last)[12:]
-  if l:boardstring == "['GameOver']"
-    let failed = append(line('$'), "GAME OVER")
+  "if l:boardstring == "['GameOver']"
+    "let failed = append(line('$'), "GAME OVER")
+    "return 0
+  "endif
+  if IsGameOver(l:boardstring)
     return 0
   endif
   let b = eval(boardstring)
@@ -231,8 +243,11 @@ function! PrettyPrint()
     return 0
   endif
   let boardstring = getline(l:last)[12:]
-  if l:boardstring == "['GameOver']"
-    "let failed = append(line('$'), "GAME OVER")
+  "if l:boardstring == "['GameOver']"
+    ""let failed = append(line('$'), "GAME OVER")
+    "return 0
+  "endif
+  if IsGameOver(l:boardstring)
     return 0
   endif
   let b = eval(boardstring)
@@ -309,4 +324,13 @@ function! IsGameWon(board)
 
   "0 means we haven't won yet. Anything greater and we've won!
   return l:winningTiles
+endfunction
+
+function! IsGameOver(board)
+  if a:board == "['GameOver']"
+    let failed = append(line('$'), "GAME OVER")
+    return 1
+  else
+    return 0
+  endif
 endfunction
