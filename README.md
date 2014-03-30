@@ -12,5 +12,5 @@ Start a new game with:
 
 This will open a new tab and start a new game.  
 
-The controls are the classic H, J, K, L and also the cursor keys Up, Down, Left, Right.
+The controls are the classic h, j, k, l and also the cursor keys Up, Down, Left, Right.
 

@@ -24,7 +24,8 @@ Start a new game with:
 <
 
 A new tab will open and a new game of 2048 will be started.
-Use the cursor keys to play: Up, Down, Left, Right.
+The controls are the classic h, j, k, l or also the cursor keys: 
+Up, Down, Left, Right.
 
 The Aim of the game is to make a tile reach the 2048 before all of the board
 fills up.
