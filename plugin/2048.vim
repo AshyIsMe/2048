@@ -43,17 +43,17 @@ function! Up2048()
   let newCols = []  "build up the list in column first order
   for i in range(0,3)
     let col = [l:b[l:i]] + [l:b[l:i+4]] + [l:b[l:i+8]] + [l:b[l:i+12]]
-    let col = filter(l:col, 'v:val !~ 0')
+    let col = filter(l:col, 'v:val != 0')
     if len(l:col) > 1
-      for i in range(0, len(l:col) - 2, 1)
-        if l:col[l:i] == l:col[l:i+1]
-          let l:col[l:i] = l:col[l:i] * 2
-          let l:col[l:i+1] = 0
+      for j in range(0, len(l:col) - 2, 1)
+        if l:col[l:j] == l:col[l:j+1]
+          let l:col[l:j] = l:col[l:j] * 2
+          let l:col[l:j+1] = 0
         endif
       endfor
     endif
 
-    let col = filter(l:col, 'v:val !~ 0')
+    let col = filter(l:col, 'v:val != 0')
     let col = extend(l:col, repeat([0], 4-len(l:col)))
     let newCols = extend(newCols, l:col)
   endfor
@@ -96,7 +96,7 @@ function! Down2048()
   let newCols = []  "build up the list in column first order
   for i in range(0,3)
     let col = [l:b[l:i]] + [l:b[l:i+4]] + [l:b[l:i+8]] + [l:b[l:i+12]]
-    let col = filter(l:col, 'v:val !~ 0')
+    let col = filter(l:col, 'v:val != 0')
     if len(l:col) > 1
       for i in range(len(l:col) - 1,1, -1)
         if l:col[l:i] == l:col[l:i-1]
@@ -106,7 +106,7 @@ function! Down2048()
       endfor
     endif
 
-    let col = filter(l:col, 'v:val !~ 0')
+    let col = filter(l:col, 'v:val != 0')
     let col = extend(repeat([0], 4-len(l:col)), l:col)
     let newCols = extend(newCols, l:col)
   endfor
@@ -147,7 +147,7 @@ function! Left2048()
   let newBoard = []
 
   for i in range(0,12,4)
-    let row = filter(l:b[(l:i):(l:i+3)], 'v:val !~ 0')
+    let row = filter(l:b[(l:i):(l:i+3)], 'v:val != 0')
     if len(l:row) > 1
       for i in range(0, len(l:row) - 2, 1)
         if l:row[l:i] == l:row[l:i+1]
@@ -156,7 +156,7 @@ function! Left2048()
         endif
       endfor
     endif
-    let row = filter(l:row, 'v:val !~ 0')
+    let row = filter(l:row, 'v:val != 0')
     let row = extend(l:row, repeat([0], 4-len(l:row)))
     let newBoard = extend(newBoard, l:row)
   endfor
@@ -191,7 +191,7 @@ function! Right2048()
   let newBoard = []
 
   for i in range(0,12,4)
-    let row = filter(l:b[(l:i):(l:i+3)], 'v:val !~ 0')
+    let row = filter(l:b[(l:i):(l:i+3)], 'v:val != 0')
     if len(l:row) > 1
       for i in range(len(l:row) - 1, 1, -1)
         if l:row[l:i] == l:row[l:i-1]
@@ -200,7 +200,7 @@ function! Right2048()
         endif
       endfor
     endif
-    let row = filter(l:row, 'v:val !~ 0')
+    let row = filter(l:row, 'v:val != 0')
     let row = extend(repeat([0], 4-len(l:row)), l:row)
     let newBoard = extend(newBoard, l:row)
   endfor
@@ -243,7 +243,7 @@ function! PrettyPrint()
     let line = '['
     for item in l:row
       "let line = l:line . PadL(string(l:item), 4) . ','
-      let line = l:line . substitute(PadL(string(l:item), 4), ' 0', '  ', '') . ','
+      let line = l:line . substitute(PadL(string(l:item), 5), ' 0', '  ', '') . ','
     endfor
     let line = l:line[0:len(l:line)-2] . ' ]'
     "let failed = append(line('$'), string(l:row))
