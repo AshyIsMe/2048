@@ -289,7 +289,7 @@ function! AddRandTile(board)
     return ["GameOver"]
   endif
 
-  "Randomly choose 2 or 4
+  "Randomly choose 2 or 4 favoring 2
   let newTile = Rand() % 10 < 9 ? 2 : 4
 
   "Randomly choose a free tile to populate with l:newTile
