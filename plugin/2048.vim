@@ -271,7 +271,13 @@ function! PadL(s,amt,...)
 endfunction
 
 function! Rand()
-  return str2nr(matchstr(reltimestr(reltime()), '\v\.@<=\d+')[1:])
+  if has('unix')
+    return system('sh -c "echo $RANDOM"')
+  elseif has('win32')
+    return system('echo %random%')
+  else
+    return str2nr(matchstr(reltimestr(reltime()), '\v\.@<=\d+')[1:])
+  endif
 endfunction
 
 function! AddRandTile(board)
