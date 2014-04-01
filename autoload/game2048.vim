@@ -267,14 +267,12 @@ function! game2048#PadL(s,amt,...)
     return repeat(char,a:amt - len(a:s)) . a:s
 endfunction
 
+let s:RAND_MAX = 32767
+let s:seed = localtime()
+
 function! game2048#Rand()
-  if has('unix')
-    return system('sh -c "echo $RANDOM"')
-  elseif has('win32')
-    return system('echo %random%')
-  else
-    return str2nr(matchstr(reltimestr(reltime()), '\v\.@<=\d+')[1:])
-  endif
+  let s:seed = s:seed * 214013 + 2531011
+  return (s:seed < 0 ? s:seed - 0x80000000 : s:seed) / 0x10000 % 0x8000
 endfunction
 
 function! game2048#AddRandTile(board)
