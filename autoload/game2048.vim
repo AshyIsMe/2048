@@ -6,6 +6,10 @@
 "  8,  9, 10, 11
 " 12, 13, 14, 15 ]
 
+"AA TODO: change hard coded boardsize of 16 to any number with a whole square
+"root
+
+
 function! game2048#New()
   let board = repeat([0], 4 * 4)
   let board = game2048#AddRandTile(l:board)
@@ -59,6 +63,16 @@ function! game2048#Up()
   for i in range(0, 3)
     let newBoard = extend(newBoard, [l:newCols[l:i]] + [l:newCols[l:i+4]] + [l:newCols[l:i+8]] + [l:newCols[l:i+12]])
   endfor
+
+  "let newBoard = game2048#TransposeBoard(b, 'l')
+  "let failed = append(line('$'), "trans left: " . string(l:newBoard))
+  "call game2048#PrintBoard(l:newBoard)
+  "let newBoard = game2048#ShiftBoard(b, 'l')
+  "let failed = append(line('$'), "shift left: " . string(l:newBoard))
+  "call game2048#PrintBoard(l:newBoard)
+  "let newBoard = game2048#TransposeBoard(b, 'r')
+  "let failed = append(line('$'), "trans right " . string(l:newBoard))
+  "call game2048#PrintBoard(l:newBoard)
 
   "Check if we've won
   if game2048#IsGameWon(l:newBoard)
@@ -143,20 +157,22 @@ function! game2048#Left()
   let b = eval(boardstring)
   let newBoard = []
 
-  for i in range(0,12,4)
-    let row = filter(l:b[(l:i):(l:i+3)], 'v:val != 0')
-    if len(l:row) > 1
-      for i in range(0, len(l:row) - 2, 1)
-        if l:row[l:i] == l:row[l:i+1]
-          let l:row[l:i] = l:row[l:i] * 2
-          let l:row[l:i+1] = 0
-        endif
-      endfor
-    endif
-    let row = filter(l:row, 'v:val != 0')
-    let row = extend(l:row, repeat([0], 4-len(l:row)))
-    let newBoard = extend(newBoard, l:row)
-  endfor
+  "for i in range(0,12,4)
+    "let row = filter(l:b[(l:i):(l:i+3)], 'v:val != 0')
+    "if len(l:row) > 1
+      "for i in range(0, len(l:row) - 2, 1)
+        "if l:row[l:i] == l:row[l:i+1]
+          "let l:row[l:i] = l:row[l:i] * 2
+          "let l:row[l:i+1] = 0
+        "endif
+      "endfor
+    "endif
+    "let row = filter(l:row, 'v:val != 0')
+    "let row = extend(l:row, repeat([0], 4-len(l:row)))
+    "let newBoard = extend(newBoard, l:row)
+  "endfor
+
+  let newBoard = game2048#ShiftBoard(b, 'l')
 
   "Check if we've won
   if game2048#IsGameWon(l:newBoard)
@@ -187,20 +203,7 @@ function! game2048#Right()
   let b = eval(boardstring)
   let newBoard = []
 
-  for i in range(0,12,4)
-    let row = filter(l:b[(l:i):(l:i+3)], 'v:val != 0')
-    if len(l:row) > 1
-      for i in range(len(l:row) - 1, 1, -1)
-        if l:row[l:i] == l:row[l:i-1]
-          let l:row[l:i] = l:row[l:i] * 2
-          let l:row[l:i-1] = 0
-        endif
-      endfor
-    endif
-    let row = filter(l:row, 'v:val != 0')
-    let row = extend(repeat([0], 4-len(l:row)), l:row)
-    let newBoard = extend(newBoard, l:row)
-  endfor
+  let newBoard = game2048#ShiftBoard(b, 'r')
 
   "Check if we've won
   if game2048#IsGameWon(l:newBoard)
@@ -212,6 +215,67 @@ function! game2048#Right()
     let newBoard = game2048#AddRandTile(l:newBoard)
     let failed = append(line('$'), "2048 board: " . string(l:newBoard))
   endif
+
+  return l:newBoard
+endfunction
+
+"[ 0,  1,  2,  3
+"  4,  5,  6,  7
+"  8,  9, 10, 11
+" 12, 13, 14, 15 ]
+"Transpose left should result in:
+"[ 3,  7,  11,  15
+"  2,  6,  10,  14
+"  1,  5,   9,  13
+"  0,  4,   8,  12 ]
+"game2048#TransposeBoard(b,'l')  => transpose board to the left
+"game2048#TransposeBoard(b,'r')  => transpose board to the right
+function! game2048#TransposeBoard(board, direction)
+  let newBoard = []
+
+  if a:direction == 'l'
+    for i in range(3, 0, -1)
+      let newRow = [a:board[l:i]] + [a:board[l:i+4]] + [a:board[l:i+8]] + [a:board[l:i+12]]
+      let newBoard = extend(newBoard, newRow)
+    endfor
+  elseif a:direction == 'r'
+    for i in range(0, 3)
+      let newRow = reverse([a:board[l:i]] + [a:board[l:i+4]] + [a:board[l:i+8]] + [a:board[l:i+12]])
+      let newBoard = extend(newBoard, newRow)
+    endfor
+  endif
+
+  return l:newBoard
+endfunction
+
+"game2048#ShiftBoard(b, 'l')
+"game2048#ShiftBoard(b, 'r')
+function! game2048#ShiftBoard(board, direction)
+  "Shift board to the left, combining matching tiles and pushing zeroes to the
+  "right.
+  let newBoard = []
+
+  "Shift left by default, reverse the row before and after to shift right
+  for i in range(0,12,4)
+    let row = filter(a:board[(l:i):(l:i+3)], 'v:val != 0')
+    let row = a:direction == 'r' ? reverse(row) : row
+
+    if len(l:row) > 1
+      for i in range(0, len(l:row) - 2, 1)
+        if l:row[l:i] == l:row[l:i+1]
+          let l:row[l:i] = l:row[l:i] * 2
+          let l:row[l:i+1] = 0
+        endif
+      endfor
+    endif
+
+    let row = filter(l:row, 'v:val != 0')
+    let row = extend(l:row, repeat([0], 4-len(l:row)))
+
+    let row = a:direction == 'r' ? reverse(row) : row
+
+    let newBoard = extend(newBoard, l:row)
+  endfor
 
   return l:newBoard
 endfunction
@@ -229,10 +293,14 @@ function! game2048#PrettyPrint()
   endif
   let b = eval(boardstring)
 
+  call game2048#PrintBoard(b)
+endfunction
+
+function! game2048#PrintBoard(board)
   let rows = []
   "split the board out into rows
   for i in range(0, 12, 4)
-    let rows = add(l:rows, l:b[(l:i):(l:i+3)])
+    let rows = add(l:rows, a:board[(l:i):(l:i+3)])
   endfor
   "print each now nicely
   let failed = append(line('$'), 'Pretty Print:')
@@ -250,21 +318,18 @@ function! game2048#PrettyPrint()
   call cursor(line('$'),0)
 endfunction
 
-function! game2048#PadR(s,amt)
+function! game2048#PadR(s,amt,...)
    "  game2048#PadR('abc', 5) == 'abc  '
-   "  game2048#PadR('ab', 5) ==  'ab   '
-    return a:s . repeat(' ',a:amt - len(a:s))
+   "  game2048#PadR('ab', 5, '.') ==  'ab...'
+  let char = a:0 > 0 ? a:1 : ' '
+  return a:s . repeat(char,a:amt - len(a:s))
 endfunction
 
 function! game2048#PadL(s,amt,...)
-  " game2048#PadL('832', 4)      == ' 823'
-  " game2048#PadL('832', 4, '0') == '0823'
-    if a:0 > 0
-        let char = a:1
-    else
-        let char = ' '
-    endif
-    return repeat(char,a:amt - len(a:s)) . a:s
+  " game2048#PadL('832', 4)      == ' 832'
+  " game2048#PadL('832', 4, '0') == '0832'
+  let char = a:0 > 0 ? a:1 : ' '
+  return repeat(char,a:amt - len(a:s)) . a:s
 endfunction
 
 let s:RAND_MAX = 32767
